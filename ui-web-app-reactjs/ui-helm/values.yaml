@@ -1,0 +1,16 @@
+deployment:
+  replicaCount: 1
+  name: my-deployment
+  image:
+    repository: deekshithsn/ui
+    pullPolicy: IfNotPresent
+    tag: ""
+
+service:
+  name: my-service
+  type: NodePort
+  port: 8080
+  targetport: 8080
+
+container:
+  name: react-ui

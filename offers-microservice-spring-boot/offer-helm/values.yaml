@@ -1,0 +1,14 @@
+deployment: 
+  replicacount: 1
+  image: 
+    reposistory: deekshithsn/offer
+    pullPolicy: IfNotPresent
+    tag: ""
+
+service:
+  port: 1001
+  name: offer
+  targetport: 1001
+
+container:
+  name: offer-ui

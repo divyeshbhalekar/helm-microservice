@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.service.name | quote }}
+  labels:
+    {{- include "zuul-chart.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetport}}
+      nodePort: {{.Values.service.nodePort}}
+      protocol: TCP
+      name: "http"
+  selector:
+    {{- include "zuul-chart.selectorLabels" . | nindent 4 }}

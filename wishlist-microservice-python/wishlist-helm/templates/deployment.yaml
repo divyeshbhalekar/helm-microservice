@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    {{- include "wishlist-helm.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.deployment.replicacount }}
+  selector:
+    matchLabels:
+      {{- include "wishlist-helm.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "wishlist-helm.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Values.container.name | quote }}
+          image: "{{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{.Values.service.targetport}}
+              protocol: TCP

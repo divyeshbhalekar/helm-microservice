@@ -1,0 +1,15 @@
+deployment: 
+  replicacount: 1
+  image: 
+    reposistory: deekshithsn/wishlist
+    pullPolicy: IfNotPresent
+    tag: ""
+
+service:
+  type: ClusterIp
+  port: 1003
+  name: wishlist
+  targetport: 5000
+
+container:
+  name: wishlist

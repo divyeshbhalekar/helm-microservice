@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    {{- include "zuul-chart.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.deployment.replicacount}}
+  selector:
+    matchLabels:
+      {{- include "zuul-chart.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "zuul-chart.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Values.container.name | quote }}
+          image: {{ .Values.deployment.image.reposistory}}
+          imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.targetport}}
+              protocol: TCP
+      affinity:
+        {{- toYaml .Values.cpa | nindent 8 }}

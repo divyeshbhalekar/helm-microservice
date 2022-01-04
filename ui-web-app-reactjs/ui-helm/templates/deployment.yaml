@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    {{- include "ui-helm.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.deployment.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "ui-helm.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "ui-helm.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{.Values.container.name | quote}}
+          image: {{ .Values.container.name | quote}}
+          imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}:{{ .Values.deployment.image.tag | default .Chart.AppVersion }}
+          ports:
+            - containerPort: {{ .Values.service.targetport }}

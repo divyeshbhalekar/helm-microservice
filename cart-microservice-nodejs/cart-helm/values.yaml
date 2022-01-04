@@ -1,0 +1,15 @@
+deployment: 
+  replicacount: 1
+  image: 
+    reposistory: deekshithsn/cart
+    pullPolicy: IfNotPresent
+    tag: ""
+
+service:
+  type: ClusterIP
+  port: 1004
+  name: cart
+  targetport: 1004
+
+container:
+  name: cart-ui
